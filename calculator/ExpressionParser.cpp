@@ -12,13 +12,9 @@ int ExpressionParser::precedence(char op) {
 
 // применение оператора через Calculator
 double ExpressionParser::applyOp(double a, double b, char op) {
-    switch (op) {
-    case '+': return calc.callFunction("sum", { a, b });
-    case '-': return calc.callFunction("sub", { a, b });
-    case '*': return calc.callFunction("mul", { a, b });
-    case '/': return calc.callFunction("div", { a, b });
-    default: throw std::runtime_error("Неизвестный оператор");
-    }
+    std::string opStr;
+    opStr += op;
+    return calc.callFunction(opStr, { a, b });
 }
 
 // вспомогательная функция для применения верхнего оператора из стека

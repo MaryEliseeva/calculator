@@ -1,25 +1,25 @@
 ﻿#include "calculator.h"
 
 Calculator::Calculator() {
-    functions.push_back({ "sum", [](const std::vector<double>& args) {
+    functions.push_back({ "+", [](const std::vector<double>& args) {
         if (args.size() != 2)
             throw std::runtime_error("sum ожидает 2 аргумента");
         return args[0] + args[1];
     } });
 
-    functions.push_back({ "sub", [](const std::vector<double>& args) {
+    functions.push_back({ "-", [](const std::vector<double>& args) {
         if (args.size() != 2)
             throw std::runtime_error("sub ожидает 2 аргумента");
         return args[0] - args[1];
     } });
 
-    functions.push_back({ "mul", [](const std::vector<double>& args) {
+    functions.push_back({ "*", [](const std::vector<double>& args) {
         if (args.size() != 2)
             throw std::runtime_error("mul ожидает 2 аргумента");
         return args[0] * args[1];
     } });
 
-    functions.push_back({ "div", [](const std::vector<double>& args) {
+    functions.push_back({ "/", [](const std::vector<double>& args) {
         if (args.size() != 2)
             throw std::runtime_error("div ожидает 2 аргумента");
         if (args[1] == 0)
