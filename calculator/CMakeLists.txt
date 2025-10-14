@@ -12,7 +12,23 @@ endif()
 project ("calculator")
 
 # Add source to this project's executable.
-add_executable (calculator "calculator.cpp" "calculator.h")
+add_executable (calculator "calculator.cpp" "calculator.h" "main.cpp" "pluginsLoader.cpp")
+add_library(funcsin SHARED plugins/funcsin.cpp)
+add_library(funcpow SHARED plugins/funcpow.cpp)
+add_library(funcsum SHARED plugins/funcsum.cpp)
+
+set_target_properties(funcsin PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+set_target_properties(funcpow PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+set_target_properties(funcsum PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+
+
+
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET calculator PROPERTY CXX_STANDARD 20)

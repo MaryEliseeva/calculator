@@ -1,12 +1,27 @@
-﻿// calculator.cpp : Defines the entry point for the application.
-//
+﻿#include "calculator.h"
+#include <iostream>
 
-#include "calculator.h"
+void Calculator::addFunction(const std::string& name, Func func) {
+    for (const auto& f : functions) {
+        if (f.name == name) {
+            throw std::runtime_error("Функция " + name + " уже зарегистрирована");
+        }
+    }
+    functions.push_back({ name, func });
+}
 
-using namespace std;
+double Calculator::callFunction(const std::string& name, const std::vector<double>& args) {
+    for (const auto& f : functions) {
+        if (f.name == name) {
+            return f.apply(args);
+        }
+    }
+    throw std::runtime_error("Неизвестная функция: " + name);
+}
 
-int main()
-{
-	cout << "Hello CMake." << endl;
-	return 0;
+void Calculator::listFunctions() {
+    std::cout << "Доступные функции:\n";
+    for (const auto& f : functions) {
+        std::cout << " - " << f.name << "\n";
+    }
 }

@@ -1,8 +1,22 @@
-﻿// calculator.h : Include file for standard system include files,
-// or project specific include files.
+﻿#pragma once
+#include <string>
+#include <vector>
+#include <functional>
+#include <stdexcept>
+#include <locale.h>
 
-#pragma once
+class Calculator {
+public:
+    using Func = std::function<double(const std::vector<double>&)>;
 
-#include <iostream>
+    struct FunctionBase {
+        std::string name;
+        Func apply;
+    };
+    void listFunctions();
+    void addFunction(const std::string& name, Func func);
+    double callFunction(const std::string& name, const std::vector<double>& args);
 
-// TODO: Reference additional headers your program requires here.
+private:
+    std::vector<FunctionBase> functions;
+};
