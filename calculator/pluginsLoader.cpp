@@ -1,4 +1,4 @@
-#include "calculator.h"
+#include "pluginsLoader.h"
 #include <windows.h>
 #include <iostream>
 

@@ -3,6 +3,7 @@
 #include <vector>
 #include <functional>
 #include <stdexcept>
+#include <iostream>
 #include <locale.h>
 
 class Calculator {
@@ -13,6 +14,9 @@ public:
         std::string name;
         Func apply;
     };
+
+    Calculator(); 
+
     void listFunctions();
     void addFunction(const std::string& name, Func func);
     double callFunction(const std::string& name, const std::vector<double>& args);
