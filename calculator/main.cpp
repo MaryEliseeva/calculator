@@ -15,7 +15,7 @@ int main() {
 
     ExpressionParser parser(calc);
     
-    std::string expr = "2 + 2 * 2";
+    std::string expr = "sin(pow(2,3) + 1)";
     std::cout << "\nТест ExpressionParser:\n";
     std::cout << expr << " = " << parser.evaluate(expr) << "\n";
 

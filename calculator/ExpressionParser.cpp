@@ -66,6 +66,37 @@ double ExpressionParser::evaluate(const std::string& expr) {
             ops.push(currentOp);
             i++;
         }
+        //плагины
+        else if (isalpha(expr[i])) {
+            int j = i;
+            // определяем названии функции плагина
+            while (j < expr.length() && isalpha(expr[j])) j++;
+            std::string funcName = expr.substr(i, j - i);
+            i = j;
+            if (expr[i] != '(') throw std::runtime_error("Ожидалась '(' после имени функции");
+            i++;
+
+            //Парсим аргументы
+            std::vector<double> args;
+            while (true) {
+                int start = i;
+                int parenCount = 0;
+                while (i < expr.length() &&
+                    (expr[i] != ',' || parenCount > 0) &&
+                    (expr[i] != ')' || parenCount > 0)) {
+                    if (expr[i] == '(') parenCount++;
+                    if (expr[i] == ')') parenCount--;
+                    i++;
+                }
+                double arg = evaluate(expr.substr(start, i - start));
+                args.push_back(arg);
+
+                if (expr[i] == ')') { i++; break; } // конец списка аргументов
+                if (expr[i] == ',') i++;// следующий аргумент
+            }
+
+            values.push(calc.callFunction(funcName, args));
+        }
         // неизвестный символ
         else {
             throw std::runtime_error(std::string("Неизвестный символ: ") + expr[i]);
