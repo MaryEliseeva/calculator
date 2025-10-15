@@ -1,25 +1,73 @@
-#include "calculator.h"
+﻿#include "calculator.h"
 #include "pluginsLoader.h"
 #include "ExpressionParser.h"
 #include <iostream>
+#include <filesystem>
+
+void loadAllPlugins(Calculator& calc, const std::string& pluginDir) {
+    bool anyLoaded = false;
+
+    if (std::filesystem::exists(pluginDir)) {
+        for (const auto& entry : std::filesystem::directory_iterator(pluginDir)) {
+            if (entry.path().extension() == ".dll") {
+                try {
+                    loadPlugin(calc, entry.path().string().c_str());
+                    anyLoaded = true;
+                }
+                catch (const std::exception& e) {
+                    std::cerr << "Ошибка при загрузке "
+                        << entry.path().filename().string()
+                        << ": " << e.what() << "\n";
+                }
+            }
+        }
+    }
+    else {
+        std::cerr << "Папка '" << pluginDir << "' не найдена\n";
+    }
+
+    if (!anyLoaded) {
+        std::cerr << "Не удалось загрузить ни одного плагина.\n";
+    }
+}
+
+void runInteractiveMode(Calculator& calc) {
+    ExpressionParser parser(calc);
+    std::string expr;
+
+    std::cout << "\nВведите выражение (0 выхода):\n";
+
+    while (true) {
+        std::cout << "> ";
+        std::getline(std::cin, expr);
+
+        if (expr == "0")
+            break;
+
+        try {
+            double result = parser.evaluate(expr);
+            std::cout << "Результат: " << result << "\n";
+        }
+        catch (const std::exception& e) {
+            std::cerr << "Ошибка вычисления: " << e.what() << "\n";
+        }
+    }
+}
 
 
 int main() {
     setlocale(LC_CTYPE, "Russian");
 
     Calculator calc;
-    loadPlugin(calc, "plugins/funcsin.dll");
-    loadPlugin(calc, "plugins/funcpow.dll");
-    loadPlugin(calc, "plugins/funccos.dll");
-    loadPlugin(calc, "plugins/funcln.dll");
-    std::cout << "\n������ �������:\n";
+
+    loadAllPlugins(calc, "plugins");
+
     calc.listFunctions();
 
-    ExpressionParser parser(calc);
-    
-    std::string expr = "sin(ln(2) + 1)*2-cos(0)+pow(1,2)";
-    std::cout << "\n���� ExpressionParser:\n";
-    std::cout << expr << " = " << parser.evaluate(expr) << "\n";
+    runInteractiveMode(calc);
 
+    std::cout << "Конец\n";
     return 0;
 }
+
+

@@ -15,4 +15,7 @@ private:
     int precedence(char op);// приоритет оператора
     double applyOp(double a, double b, char op);
     void processTopOperator(std::stack<double>& values, std::stack<char>& ops);
+    double parseNumber(const std::string& expr, int& i);
+    double parseFunction(const std::string& expr, int& i);
+    void processOperatorOrParenthesis(std::stack<double>& values, std::stack<char>& ops, char token);
 };
