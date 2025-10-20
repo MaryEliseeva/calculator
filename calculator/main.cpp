@@ -35,7 +35,7 @@ void runInteractiveMode(Calculator& calc) {
     ExpressionParser parser(calc);
     std::string expr;
 
-    std::cout << "\nВведите выражение (0 выхода):\n";
+    std::cout << "\nВведите выражение (0 для выхода):\n";
 
     while (true) {
         std::cout << "> ";

@@ -13,24 +13,6 @@ project ("calculator")
 
 # Add source to this project's executable.
 add_executable (calculator "calculator.cpp" "calculator.h" "main.cpp" "pluginsLoader.cpp" "ExpressionParser.cpp")
-add_library(funcsin SHARED plugins/funcsin.cpp)
-add_library(funcpow SHARED plugins/funcpow.cpp)
-add_library(funccos SHARED plugins/funccos.cpp)
-add_library(funcln SHARED plugins/funcln.cpp)
-
-set_target_properties(funcsin PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
-)
-set_target_properties(funcpow PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
-)
-set_target_properties(funccos PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
-)
-set_target_properties(funcln PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
-)
-
 
 
 
